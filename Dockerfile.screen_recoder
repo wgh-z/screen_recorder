@@ -1,51 +1,25 @@
-# docker run --rm -it --gpus all --name wsl tracker:2.0.1-cuda11.7-cudnn8-runtime
+FROM python:3.10.11-buster
 
-# Start FROM PyTorch image https://hub.docker.com/r/pytorch/pytorch or nvcr.io/nvidia/pytorch:23.03-py3
-FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+RUN mkdir -p /home/appuser
 
-
-# ENV DEBIAN_FRONTEND=noninteractive
-
-RUN /bin/bash -c 'conda init bash'
-
-# RUN pip install --no-cache nvidia-tensorrt --index-url https://pypi.ngc.nvidia.com
+# 将原镜像地址替换为阿里云镜像地址
+RUN sed -i 's/deb.debian.org/mirrors.cloud.tencent.com/g' /etc/apt/sources.list
+RUN apt-get update && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
 # 换源并更新pip
 RUN pip config set global.index-url https://pypi.mirrors.ustc.edu.cn/simple/
 RUN pip install --upgrade pip
 
-# 将原镜像地址替换为阿里云镜像地址
-RUN sed -i 's/archive.ubuntu.com/mirrors.cloud.tencent.com/g' /etc/apt/sources.list
-RUN sed -i 's/security.ubuntu.com/mirrors.cloud.tencent.com/g' /etc/apt/sources.list
+# 安装git
+RUN apt-get install -y git
 
+RUN git config --global --unset http.proxy && \
+    git config --global --unset https.proxy
 
-RUN apt update \
-    && apt install --no-install-recommends -y gcc git zip curl htop libgl1-mesa-glx libglib2.0-0 libpython3-dev gnupg g++
+RUN git clone git@github.com:wgh-z/screen_recorder.git
 
+WORKDIR /home/appuser/screen_recorder
 
-RUN apt upgrade --no-install-recommends -y openssl tar
+RUN cd screen_recorder && pip install -r requirements.txt
 
-# Create working directory
-RUN mkdir -p /home/appuser/yolov5
-WORKDIR /home/appuser/yolov5
-COPY processing /home/appuser/yolov5/processing
-COPY templates /home/appuser/yolov5/templates
-COPY trackers /home/appuser/yolov5/trackers
-COPY weights /home/appuser/yolov5/weights
-COPY yolov5 /home/appuser/yolov5/yolov5
-COPY main.py /home/appuser/yolov5
-COPY yolov5_tracker.py /home/appuser/yolov5
-
-# RUN pip install --no-cache-dir Cython==3.0.8
-
-RUN pip install --no-cache-dir Cython==3.0.8 cython-bbox==0.1.5 \
-    easydict==1.11 filterpy==1.4.5 flask==3.0.2 gdown==5.1.0 \
-    gitpython==3.1.41 ipython==8.12.0 lap==0.4.0 matplotlib==3.8.2 \
-    numpy==1.23.5 onnx==1.15.0 opencv-python==4.9.0.80 openvino==2023.3.0 \
-    pandas==2.2.0 Pillow==9.4.0 psutil==5.9.0 pycocotools==2.0.7 \
-    PyYAML==6.0 requests==2.29.0 scipy==1.12.0 seaborn==0.13.2 \
-    thop==0.1.1.post2209072238 tqdm==4.65.0 tensorboard==2.15.1 \
-    ultralytics==8.1.9
-
-# Set environment variables
-ENV OMP_NUM_THREADS=1
+# CMD ["python", "main.py"]
