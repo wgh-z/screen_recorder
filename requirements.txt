@@ -1,0 +1,51 @@
+# pip install -r requirements.txt
+
+# Base ----------------------------------------
+gitpython==3.1.41
+ipython==8.18.1  # interactive notebook
+matplotlib==3.8.2
+numpy==1.23.5
+opencv-python==4.9.0.80
+Pillow==9.4.0
+psutil==5.9.8  # system resources
+PyYAML==6.0.1
+# requests==2.31.0
+scipy==1.12.0
+# thop>=0.1.1  # FLOPs computation
+torch==2.1.2  # see https://pytorch.org/get-started/locally (recommended)
+torchvision==0.16.2
+tqdm==4.66.1
+ultralytics==8.1.8
+# protobuf<=3.20.1  # https://github.com/ultralytics/yolov5/issues/8012
+
+# Logging ---------------------------------------------------------------------
+# tensorboard>=2.4.1
+# clearml>=1.2.0
+# comet
+
+# Plotting --------------------------------------------------------------------
+pandas==2.2.0
+seaborn==0.13.2
+
+# StrongSORT ------------------------------------------------------------------
+easydict==1.11
+
+# torchreid -------------------------------------------------------------------
+gdown==5.0.1
+
+# ByteTrack -------------------------------------------------------------------
+lap==0.4.0
+Cython==3.0.8
+cython_bbox==0.1.5
+# git+https://github.com/samson-wang/cython_bbox.git@9badb346a9222c98f828ba45c63fe3b7f2790ea2
+
+# OCSORT ----------------------------------------------------------------------
+# filterpy==1.4.5
+
+# Export ----------------------------------------------------------------------
+onnx==1.15.0  # ONNX export
+# onnx-simplifier==0.4.35  # ONNX simplifier
+onnxruntime==1.16.3  # ONNX runtime
+# nvidia-pyindex  # TensorRT export
+# nvidia-tensorrt  # TensorRT export
+openvino-dev>=2023.0  # OpenVINO export

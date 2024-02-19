@@ -1,0 +1,20 @@
+# python
+__pycache__
+*.py[cod]
+.venv
+.vscode
+
+# build
+/build
+/dist
+*.exe
+*.spec
+
+# source
+# /weights
+# ! /weights/yolov5s.pt
+/datasets
+/dependence
+main2.py
+*.mp4
+*.zip
