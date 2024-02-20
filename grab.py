@@ -15,6 +15,7 @@ import numpy as np
 from flask_cors import CORS
 from PIL import ImageFile
 from flask import Flask, Response
+import argparse
 
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -88,16 +89,26 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    with open("./屏幕信息.txt", "r") as f:
-        ip, port = f.readline().split()
-        port = int(port)
-        Moniter, x, y, width, height = f.readline().split()
-        Moniter = int(Moniter)
-        x = int(x)
-        y = int(y)
-        width = int(width)
-        height = int(height)
+    # with open("./屏幕信息.txt", "r") as f:
+    #     ip, port = f.readline().split()
+    #     port = int(port)
+    #     Moniter, x, y, width, height = f.readline().split()
+    #     Moniter = int(Moniter)
+    #     x = int(x)
+    #     y = int(y)
+    #     width = int(width)
+    #     height = int(height)
 
-    print(f"屏幕{Moniter}的起始坐标为({x},{y}),宽度为{width},高度为{height}")
-    print(f'http://{ip}:{port}')
-    app.run(host=ip, port=port, debug=False, threaded=True, processes=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, default='0.0.0.0', help="ip address")
+    parser.add_argument("--port", type=int, default=5000, help="port number")
+    parser.add_argument("--Moniter", type=int, default=0, help="Moniter number")
+    parser.add_argument("--x", type=int, default=0, help="x")
+    parser.add_argument("--y", type=int, default=0, help="y")
+    parser.add_argument("--width", type=int, default=1920, help="width")
+    parser.add_argument("--height", type=int, default=1080, help="height")
+    args = parser.parse_args()
+
+    print(f"屏幕{args.Moniter}的起始坐标为({args.x},{args.y}),宽度为{args.width},高度为{args.height}")
+    print(f'http://{args.ip}:{args.port}')
+    app.run(host=args.ip, port=args.port, debug=False, threaded=True, processes=True)
