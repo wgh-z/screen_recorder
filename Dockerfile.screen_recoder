@@ -1,14 +1,16 @@
-# docker build --pull --rm -f "screen_recorder\Dockerfile.screen_recoder" -t screen_recorder:3.9.13-buster "screen_recorder" 
-# docker run -it myimage python main.py -a -b
+# docker build --pull --rm -f "Dockerfile.screen_recoder" -t graber:3.9.13-buster .
+
+# 宿主机sudo apt install x11-xserver-utils
+# 宿主机xhost +
+# docker run -d -e DISPLAY -e QT_X11_NO_MITSHM=1 -p 3001:5000 --name graber graber:3.9.13-buster python grab.py --Moniter 1 --x 960 --y 540 --width 960 --height 540
 
 FROM python:3.9.13-buster
 
 # 将原镜像地址替换为阿里云镜像地址
 RUN sed -i 's/deb.debian.org/mirrors.cloud.tencent.com/g' /etc/apt/sources.list
-RUN apt-get update && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt clean && apt autoremove && rm -rf /var/lib/apt/lists/*
 
-# 安装git
-RUN apt-get install -y git
+RUN  apt update && apt install -y git ffmpeg
 
 # CMD ["/bin/bash"]
 

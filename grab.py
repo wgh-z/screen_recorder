@@ -84,8 +84,9 @@ CORS(app, supports_credentials=True)
 
 @app.route('/video_feed')
 def video_feed():
-    global Moniter, x, y, width, height
-    return Response(gen(LoadScreenshots(f"Screen {Moniter} {x} {y} {width} {height}")), mimetype='multipart/x-mixed-replace; boundary=frame')
+    global args
+    return Response(gen(LoadScreenshots(f"Screen {args.Moniter} {args.x} {args.y} {args.width} {args.height}")),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 if __name__ == '__main__':
