@@ -41,6 +41,5 @@ RUN pip install --upgrade pip
 
 # RUN cd screen_recorder && pip install -r requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install -r requirements.txt
 
 # CMD ["python", "main.py"]
