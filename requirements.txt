@@ -1,5 +1,6 @@
 # pip install -r requirements.txt
 
+Pillow==9.4.0
 pyinstaller==6.1.0
 pyinstaller-hooks-contrib==2023.10
 opencv-python==4.8.1.78
